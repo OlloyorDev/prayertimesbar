@@ -7,7 +7,7 @@ set -euo pipefail
 
 APP_NAME="PrayerTimesBar"
 INSTALL_DIR="/Applications"
-GITHUB_REPO="${GITHUB_REPO:-YOUR_USERNAME/prayertimesbar}"
+GITHUB_REPO="${GITHUB_REPO:-OlloyorDev/prayertimesbar}"
 
 GREEN='\033[0;32m'; YELLOW='\033[0;33m'; RED='\033[0;31m'; NC='\033[0m'
 info() { printf "${GREEN}==>${NC} %s\n" "$1"; }
@@ -31,9 +31,6 @@ if [ -n "$SCRIPT_DIR" ] && [ -f "${SCRIPT_DIR}/Package.swift" ]; then
     APP_PATH="${SCRIPT_DIR}/${APP_NAME}.app"
 else
     info "GitHub release'dan yuklab olinmoqda (masofaviy rejim)"
-    [ "$GITHUB_REPO" != "YOUR_USERNAME/prayertimesbar" ] || \
-        err "GITHUB_REPO sozlanmagan. install.sh ichida YOUR_USERNAME ni o'zgartiring."
-
     TMP="$(mktemp -d)"
     trap 'rm -rf "$TMP"' EXIT
 
