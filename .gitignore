@@ -1,0 +1,13 @@
+.DS_Store
+.build/
+dist/
+PrayerTimesBar.app/
+*.zip
+*.dmg
+
+.swiftpm/
+xcuserdata/
+*.xcodeproj/
+
+.vscode/
+.idea/
