@@ -11,6 +11,7 @@ final class PrayerTimesViewModel: ObservableObject {
     @Published var statusMessage: String = ""
     @Published var launchAtLoginEnabled: Bool = LaunchAtLogin.isEnabled
     @Published var notificationsEnabled: Bool = UserDefaults.standard.bool(forKey: "notificationsEnabled")
+    @Published var tasbehCount: Int = UserDefaults.standard.integer(forKey: "tasbehCount")
 
     private let locationManager = LocationManager()
     private let prayerManager = PrayerTimesManager()
@@ -64,6 +65,16 @@ final class PrayerTimesViewModel: ObservableObject {
             UserDefaults.standard.set(false, forKey: "notificationsEnabled")
             NotificationManager.shared.clearAll()
         }
+    }
+
+    func incrementTasbeh() {
+        tasbehCount += 1
+        UserDefaults.standard.set(tasbehCount, forKey: "tasbehCount")
+    }
+
+    func resetTasbeh() {
+        tasbehCount = 0
+        UserDefaults.standard.set(0, forKey: "tasbehCount")
     }
 
     private func wireLocationCallbacks() {

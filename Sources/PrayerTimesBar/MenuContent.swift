@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MenuContent: View {
     @ObservedObject var viewModel: PrayerTimesViewModel
+    @State private var tasbehExpanded = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -29,6 +30,10 @@ struct MenuContent: View {
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
+
+            Divider()
+
+            tasbehSection
 
             Divider()
 
@@ -73,6 +78,61 @@ struct MenuContent: View {
         }
         .padding(14)
         .frame(width: 260)
+    }
+
+    @ViewBuilder
+    private var tasbehSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Button {
+                withAnimation(.easeInOut(duration: 0.15)) {
+                    tasbehExpanded.toggle()
+                }
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "circle.grid.3x3.fill")
+                        .foregroundStyle(.secondary)
+                    Text("Tasbeh")
+                        .font(.callout)
+                    Spacer()
+                    Image(systemName: tasbehExpanded ? "chevron.up" : "chevron.down")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+
+            if tasbehExpanded {
+                HStack(spacing: 8) {
+                    Text("\(viewModel.tasbehCount)")
+                        .font(.system(size: 28, weight: .bold, design: .rounded))
+                        .monospacedDigit()
+                        .frame(minWidth: 56, alignment: .leading)
+
+                    Spacer()
+
+                    Button {
+                        viewModel.resetTasbeh()
+                    } label: {
+                        Image(systemName: "arrow.counterclockwise")
+                            .frame(width: 36, height: 36)
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(viewModel.tasbehCount == 0)
+                    .help("Nolga qaytarish")
+
+                    Button {
+                        viewModel.incrementTasbeh()
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(.headline)
+                            .frame(width: 36, height: 36)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .help("Sanash")
+                }
+            }
+        }
     }
 
     @ViewBuilder
